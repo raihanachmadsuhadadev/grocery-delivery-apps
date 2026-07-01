@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
 
 export const connectDB = async () => {
-    await mongoose.connect('mongodb+srv://grocerrydeliverryapps:250203@cluster0.mtzyvpt.mongodb.net/grocerry-apps').then(()=>console.log("DB Connected"));
+    const mongoUri = process.env.MONGO_URI;
+
+    if (!mongoUri) {
+        throw new Error("MONGO_URI is not defined");
+    }
+
+    await mongoose.connect(mongoUri).then(()=>console.log("DB Connected"));
 }
