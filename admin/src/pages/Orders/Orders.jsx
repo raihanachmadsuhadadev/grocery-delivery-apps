@@ -4,12 +4,14 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { assets } from '../../assets/assets';
 
-const Orders = ({ url }) => {
+const Orders = ({ url, token, onUnauthorized }) => {
   const [orders, setOrders] = useState([]);
 
   const fetchAllOrders = async () => {
     try {
-      const response = await axios.get(`${url}/api/order/list`);
+      const response = await axios.get(`${url}/api/order/list`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       if (response.data.success) {
         setOrders(response.data.data);
         console.log(response.data.data);
@@ -17,24 +19,38 @@ const Orders = ({ url }) => {
         toast.error("Error fetching orders");
       }
     } catch (error) {
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        onUnauthorized();
+        return;
+      }
       toast.error("Error fetching orders");
       console.error(error);
     }
   };
 
   const statusHandler = async (event,orderId) => {
-   const response = await axios.post(url+"/api/order/status",{
-    orderId,
-    status:event.target.value
-   })
-   if (response.data.success) {
-    await fetchAllOrders();
+   try {
+    const response = await axios.post(url+"/api/order/status",{
+      orderId,
+      status:event.target.value
+    },{
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    if (response.data.success) {
+      await fetchAllOrders();
+    }
+   } catch (error) {
+    if (error.response?.status === 401 || error.response?.status === 403) {
+      onUnauthorized();
+      return;
+    }
+    toast.error("Error updating status");
    }
   }
 
   useEffect(() => {
     fetchAllOrders();
-  }, []);
+  }, [token]);
 
   return (
     <div className='orders add'>
