@@ -4,7 +4,7 @@ import { assets } from "../../assets/assets";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Add = ({ url }) => {
+const Add = ({ url, token, onUnauthorized }) => {
   const [image, setImage] = useState(false);
   const [data, setData] = useState({
     name: "",
@@ -32,20 +32,30 @@ const Add = ({ url }) => {
     formData.append("subcategory",data.subcategory)
     formData.append("image", image);
 
-    const response = await axios.post(`${url}/api/food/add`, formData);
-    if (response.data.success) {
-      setData({
-        name: "",
-        brand:"",
-        description: "",
-        price: "",
-        category: "Fruits",
-        subcategory:"Import"
+    try {
+      const response = await axios.post(`${url}/api/food/add`, formData, {
+        headers: { Authorization: `Bearer ${token}` }
       });
-      setImage(false);
-      toast.success(response.data.message);
-    } else {
-      toast.error(response.data.message);
+      if (response.data.success) {
+        setData({
+          name: "",
+          brand:"",
+          description: "",
+          price: "",
+          category: "Fruits",
+          subcategory:"Import"
+        });
+        setImage(false);
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        onUnauthorized();
+        return;
+      }
+      toast.error("Error adding item");
     }
   };
 
