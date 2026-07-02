@@ -15,7 +15,7 @@ const List = ({ url, token, onUnauthorized }) => {
         toast.error("Error fetching data");
       }
     } catch (error) {
-      toast.error("Error fetching data");
+      toast.error(error.response?.data?.message || "Error fetching data");
     }
   };
 
@@ -35,7 +35,7 @@ const List = ({ url, token, onUnauthorized }) => {
         onUnauthorized();
         return;
       }
-      toast.error("Error removing item");
+      toast.error(error.response?.data?.message || "Error removing item");
     }
   };
 

@@ -42,13 +42,17 @@ const PlaceOrder = () => {
             amount:getTotalCartAmount()+2,
 
         }
-        let response  =  await axios.post(url+"/api/order/place",orderData,{headers:{token}})
-        if (response.data.success) {
-            const {session_url} = response.data;
-            window.location.replace(session_url);
-        }
-        else{
-            alert("Error");
+        try {
+            let response  =  await axios.post(url+"/api/order/place",orderData,{headers:{token}})
+            if (response.data.success) {
+                const {session_url} = response.data;
+                window.location.replace(session_url);
+            }
+            else{
+                alert(response.data.message || "Unable to place order. Please try again.");
+            }
+        } catch (error) {
+            alert(error.response?.data?.message || "Unable to place order. Please try again.");
         }
     }
 

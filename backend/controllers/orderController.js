@@ -2,23 +2,46 @@ import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe"
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
-
 
 // placing user order for frontend
 const placeOrder = async (req, res) => {
 
     const frontend_url = process.env.FRONTEND_URL || "http://localhost:5173"
+    const paymentMode = process.env.PAYMENT_MODE || "demo"
 
     try {
+        if (paymentMode === "stripe" && !process.env.STRIPE_SECRET_KEY) {
+            return res.json({
+                success: false,
+                message: "Stripe is not configured. Use PAYMENT_MODE=demo for local checkout."
+            })
+        }
+
+        if (paymentMode !== "demo" && paymentMode !== "stripe") {
+            return res.json({
+                success: false,
+                message: "Invalid payment mode. Use PAYMENT_MODE=demo or PAYMENT_MODE=stripe."
+            })
+        }
+
         const newOrder = new orderModel({
             userId: req.body.userId,
             items: req.body.items,
             amount: req.body.amount,
             address: req.body.address
         })
-        await newOrder.save();
-        await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
+
+        if (paymentMode === "demo") {
+            await newOrder.save();
+            await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
+
+            return res.json({
+                success: true,
+                session_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}&mode=demo`
+            })
+        }
+
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
         const line_items = req.body.items.map(item => ({
             price_data: {
@@ -49,10 +72,13 @@ const placeOrder = async (req, res) => {
             cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
         })
 
+        await newOrder.save();
+        await userModel.findByIdAndUpdate(req.body.userId, { cartData: {} });
+
         res.json({ success: true, session_url: session.url })
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: "Error" })
+        res.json({ success: false, message: "Unable to place order. Please try again." })
     }
 }
 

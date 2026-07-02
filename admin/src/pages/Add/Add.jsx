@@ -55,7 +55,7 @@ const Add = ({ url, token, onUnauthorized }) => {
         onUnauthorized();
         return;
       }
-      toast.error("Error adding item");
+      toast.error(error.response?.data?.message || "Error adding item");
     }
   };
 

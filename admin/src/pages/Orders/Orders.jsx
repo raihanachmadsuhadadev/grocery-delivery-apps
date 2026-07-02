@@ -23,7 +23,7 @@ const Orders = ({ url, token, onUnauthorized }) => {
         onUnauthorized();
         return;
       }
-      toast.error("Error fetching orders");
+      toast.error(error.response?.data?.message || "Error fetching orders");
       console.error(error);
     }
   };
@@ -44,7 +44,7 @@ const Orders = ({ url, token, onUnauthorized }) => {
       onUnauthorized();
       return;
     }
-    toast.error("Error updating status");
+    toast.error(error.response?.data?.message || "Error updating status");
    }
   }
 
