@@ -1,18 +1,18 @@
 # Grocery Delivery Apps
 
-A simple grocery and food delivery application built as a local portfolio demo. The project includes a customer-facing ordering app, an admin panel, and an Express.js REST API connected to MongoDB.
+Aplikasi grocery dan food delivery sederhana yang dibuat sebagai demo portfolio lokal. Project ini terdiri dari customer app, admin panel, dan REST API Express.js yang terhubung ke MongoDB.
 
-This repository is intended to demonstrate common delivery app flows such as product browsing, cart management, checkout simulation, order history, admin product management, and order status updates.
+Repository ini ditujukan untuk menampilkan alur umum aplikasi delivery, seperti melihat produk, mengelola cart, simulasi checkout, riwayat order, manajemen produk oleh admin, dan update status order.
 
-## Project Overview
+## Gambaran Umum Project
 
-Grocery Delivery Apps is split into three main applications:
+Grocery Delivery Apps dibagi menjadi tiga aplikasi utama:
 
-- `backend` - Express.js API with MongoDB/Mongoose
-- `frontend` - React + Vite customer app
-- `admin` - React + Vite admin panel
+- `backend` - Express.js API dengan MongoDB/Mongoose
+- `frontend` - React + Vite untuk customer app
+- `admin` - React + Vite untuk admin panel
 
-The app is designed for local development and portfolio presentation. It includes demo checkout mode through `PAYMENT_MODE=demo`, so orders can be placed without processing a real payment.
+Aplikasi ini dirancang untuk local development dan kebutuhan presentasi portfolio. Project menggunakan demo checkout mode melalui `PAYMENT_MODE=demo`, sehingga order dapat dibuat tanpa memproses pembayaran sungguhan.
 
 ## Tech Stack
 
@@ -23,8 +23,8 @@ The app is designed for local development and portfolio presentation. It include
 - MongoDB Atlas
 - Mongoose
 - JSON Web Token authentication
-- Multer for image uploads
-- Stripe package structure for payment flow
+- Multer untuk upload gambar
+- Struktur package Stripe untuk payment flow
 
 ### Customer Frontend
 
@@ -42,7 +42,7 @@ The app is designed for local development and portfolio presentation. It include
 - Bootstrap
 - React Toastify
 
-## Key Features
+## Fitur Utama
 
 ### Customer App
 
@@ -52,7 +52,7 @@ The app is designed for local development and portfolio presentation. It include
 - Checkout page
 - Demo checkout mode
 - My Orders page
-- Order tracking/status updates after admin changes order status
+- Tracking/update status order setelah admin mengubah status order
 
 ### Admin Panel
 
@@ -67,16 +67,16 @@ The app is designed for local development and portfolio presentation. It include
 ### Backend
 
 - REST API
-- MongoDB Atlas connection
+- Koneksi MongoDB Atlas
 - Customer authentication
 - Cart API
 - Food/product API
 - Order API
 - Admin authentication
 - Protected admin endpoints
-- Demo checkout mode with `PAYMENT_MODE=demo`
+- Demo checkout mode dengan `PAYMENT_MODE=demo`
 
-## Project Structure
+## Struktur Project
 
 ```text
 grocery-delivery-apps/
@@ -87,7 +87,7 @@ grocery-delivery-apps/
 +-- README.md
 ```
 
-## Screenshots
+## Screenshot
 
 ### Customer Home
 
@@ -99,7 +99,7 @@ grocery-delivery-apps/
 
 ![Add to cart state](docs/screenshots/02-customer-product-flow/add-to-cart-state.png)
 
-### Customer Cart and Checkout
+### Customer Cart dan Checkout
 
 ![Cart page](docs/screenshots/03-customer-cart-checkout/cart-page.png)
 
@@ -129,9 +129,9 @@ grocery-delivery-apps/
 
 ## Environment Variables
 
-Create a `.env` file inside each app folder as needed. Do not commit real secrets or production credentials.
+Buat file `.env` di dalam folder aplikasi yang membutuhkan konfigurasi. Jangan commit secret asli atau credential production.
 
-### Backend `.env` Example
+### Contoh Backend `.env`
 
 ```env
 PORT=4000
@@ -158,103 +158,105 @@ VITE_API_URL=http://localhost:4000
 VITE_API_URL=http://localhost:4000
 ```
 
-## Local Setup
+## Setup Lokal
 
-Clone the repository and install dependencies for each application.
+Clone repository dan install dependency untuk setiap aplikasi.
 
 ```bash
 git clone <repository-url>
 cd grocery-delivery-apps
 ```
 
-Install backend dependencies:
+Install dependency backend:
 
 ```bash
 cd backend
 npm install
 ```
 
-Install customer frontend dependencies:
+Install dependency customer frontend:
 
 ```bash
 cd ../frontend
 npm install
 ```
 
-Install admin panel dependencies:
+Install dependency admin panel:
 
 ```bash
 cd ../admin
 npm install
 ```
 
-## Running The Project
+## Menjalankan Project
 
-Start the backend API:
+Jalankan backend API:
 
 ```bash
 cd backend
 npm run server
 ```
 
-Backend runtime:
+Runtime backend:
 
 ```text
 http://localhost:4000
 ```
 
-Start the customer frontend:
+Jalankan customer frontend:
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-Customer frontend runtime:
+Runtime customer frontend:
 
 ```text
 http://localhost:5173
 ```
 
-Start the admin panel on port `5174`:
+Jalankan admin panel di port `5174`:
 
 ```bash
 cd admin
 npm run dev -- --port 5174
 ```
 
-Admin panel runtime:
+Runtime admin panel:
 
 ```text
 http://localhost:5174
 ```
 
-## Demo Admin Account
+## Akun Demo Admin
 
-For local demo only:
+Untuk demo lokal:
 
 ```text
 Email: admin@deliveryapps.local
 Password: admin123
 ```
 
-These credentials are example values for a local portfolio demo. They are not production credentials and should be changed for any real deployment.
+Credential ini hanya contoh untuk demo portfolio lokal. Ini bukan credential production dan harus diganti jika project digunakan untuk deployment nyata.
 
 ## Demo Checkout Mode
 
-This project uses `PAYMENT_MODE=demo` for local portfolio testing.
+Project ini menggunakan `PAYMENT_MODE=demo` untuk kebutuhan pengujian lokal dan portfolio.
 
-When demo mode is enabled:
+Saat demo mode aktif:
 
-- Checkout simulates a successful payment.
-- The user is redirected to My Orders after checkout.
-- The order appears in Admin Orders.
-- Admin can update the order status.
-- The customer can see the updated order status in My Orders.
+- Checkout mensimulasikan pembayaran berhasil.
+- User diarahkan ke halaman My Orders setelah checkout.
+- Order tetap masuk ke Admin Orders.
+- Admin dapat mengubah status order.
+- Customer dapat melihat status order yang sudah diperbarui di My Orders.
 
-The Stripe package and payment flow structure are present, but production-ready Stripe verification and webhook handling have not been implemented yet.
+Struktur package Stripe dan payment flow sudah tersedia, tetapi Stripe webhook verification dan payment verification yang production-ready belum diimplementasikan.
 
-## API Overview
+Project ini belum production-hardened dan masih ditujukan untuk demo lokal.
+
+## Ringkasan API
 
 Base URL:
 
@@ -262,47 +264,47 @@ Base URL:
 http://localhost:4000
 ```
 
-Main endpoints:
+Endpoint utama:
 
-| Method | Endpoint | Description |
+| Method | Endpoint | Deskripsi |
 | --- | --- | --- |
-| `GET` | `/` | API health check |
-| `POST` | `/api/user/register` | Register customer account |
-| `POST` | `/api/user/login` | Login customer account |
-| `GET` | `/api/food/list` | Get product list |
-| `POST` | `/api/food/add` | Add product, protected admin endpoint |
-| `POST` | `/api/food/remove` | Remove product, protected admin endpoint |
-| `POST` | `/api/cart/add` | Add item to customer cart |
-| `POST` | `/api/cart/remove` | Remove item from customer cart |
-| `POST` | `/api/cart/get` | Get customer cart |
-| `POST` | `/api/order/place` | Place customer order |
-| `POST` | `/api/order/verify` | Verify order/payment flow |
-| `POST` | `/api/order/userorders` | Get customer orders |
-| `GET` | `/api/order/list` | Get all orders, protected admin endpoint |
-| `POST` | `/api/order/status` | Update order status, protected admin endpoint |
-| `POST` | `/api/admin/login` | Login admin account |
-| `GET` | `/images/:filename` | Serve uploaded product images |
+| `GET` | `/` | Health check API |
+| `POST` | `/api/user/register` | Registrasi akun customer |
+| `POST` | `/api/user/login` | Login akun customer |
+| `GET` | `/api/food/list` | Mengambil daftar produk |
+| `POST` | `/api/food/add` | Menambahkan produk, protected admin endpoint |
+| `POST` | `/api/food/remove` | Menghapus produk, protected admin endpoint |
+| `POST` | `/api/cart/add` | Menambahkan item ke cart customer |
+| `POST` | `/api/cart/remove` | Menghapus item dari cart customer |
+| `POST` | `/api/cart/get` | Mengambil data cart customer |
+| `POST` | `/api/order/place` | Membuat order customer |
+| `POST` | `/api/order/verify` | Verifikasi order/payment flow |
+| `POST` | `/api/order/userorders` | Mengambil daftar order customer |
+| `GET` | `/api/order/list` | Mengambil semua order, protected admin endpoint |
+| `POST` | `/api/order/status` | Mengubah status order, protected admin endpoint |
+| `POST` | `/api/admin/login` | Login akun admin |
+| `GET` | `/images/:filename` | Menyajikan file gambar produk yang di-upload |
 
-Customer endpoints use customer JWT authentication where required. Admin endpoints use admin token authentication where required.
+Endpoint customer menggunakan customer JWT authentication pada route yang membutuhkan proteksi. Endpoint admin menggunakan admin token authentication pada route yang membutuhkan proteksi.
 
-## Known Limitations
+## Keterbatasan / Known Limitations
 
-- Demo checkout mode is used for local portfolio testing.
-- Stripe webhook verification is not implemented yet.
-- Admin credential is configured through environment variables.
-- Tokens are stored in `localStorage` for local demo simplicity.
-- CORS is still open for local development.
-- This project is not production-hardened yet.
+- Demo checkout digunakan untuk pengujian lokal dan portfolio.
+- Stripe webhook verification belum diimplementasikan.
+- Credential admin menggunakan environment variable.
+- Token disimpan di `localStorage` untuk kesederhanaan demo lokal.
+- CORS masih terbuka untuk kebutuhan local development.
+- Project belum disiapkan untuk production deployment.
 
-## Future Improvements
+## Pengembangan Selanjutnya / Future Improvements
 
 - Stripe webhook integration
 - Role-based admin management
-- Stricter CORS configuration
-- Better order tracking UI
-- Image storage using cloud storage
+- Konfigurasi CORS yang lebih ketat
+- UI order tracking yang lebih baik
+- Penyimpanan gambar menggunakan cloud storage
 - Deployment configuration
-- Improved validation and error handling
+- Validasi dan error handling yang lebih baik
 
 ## Author
 
