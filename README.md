@@ -1,10 +1,10 @@
 # Grocery Delivery Apps
 
-Aplikasi grocery dan food delivery sederhana yang dibuat sebagai demo portfolio lokal. Project ini terdiri dari customer app, admin panel, dan REST API Express.js yang terhubung ke MongoDB.
+Aplikasi grocery dan food delivery sederhana untuk mengelola alur pemesanan produk, cart, checkout, order customer, serta manajemen produk dan order dari sisi admin. Project ini terdiri dari customer app, admin panel, dan REST API Express.js yang terhubung ke MongoDB.
 
-Repository ini ditujukan untuk menampilkan alur umum aplikasi delivery, seperti melihat produk, mengelola cart, simulasi checkout, riwayat order, manajemen produk oleh admin, dan update status order.
+Repository ini mendokumentasikan sistem delivery end-to-end, mulai dari proses customer memilih produk sampai admin memproses dan memperbarui status order.
 
-## Gambaran Umum Project
+## Gambaran Umum Sistem
 
 Grocery Delivery Apps dibagi menjadi tiga aplikasi utama:
 
@@ -12,7 +12,7 @@ Grocery Delivery Apps dibagi menjadi tiga aplikasi utama:
 - `frontend` - React + Vite untuk customer app
 - `admin` - React + Vite untuk admin panel
 
-Aplikasi ini dirancang untuk local development dan kebutuhan presentasi portfolio. Project menggunakan demo checkout mode melalui `PAYMENT_MODE=demo`, sehingga order dapat dibuat tanpa memproses pembayaran sungguhan.
+Aplikasi ini dirancang untuk pengembangan lokal dengan pemisahan antara customer interface, admin interface, dan backend API. Sistem menyediakan mode checkout lokal melalui `PAYMENT_MODE=demo`, sehingga alur pemesanan dapat diuji tanpa memproses pembayaran sungguhan.
 
 ## Tech Stack
 
@@ -50,7 +50,7 @@ Aplikasi ini dirancang untuk local development dan kebutuhan presentasi portfoli
 - Add to cart
 - Cart page
 - Checkout page
-- Demo checkout mode
+- Mode checkout lokal
 - My Orders page
 - Tracking/update status order setelah admin mengubah status order
 
@@ -74,7 +74,7 @@ Aplikasi ini dirancang untuk local development dan kebutuhan presentasi portfoli
 - Order API
 - Admin authentication
 - Protected admin endpoints
-- Demo checkout mode dengan `PAYMENT_MODE=demo`
+- Mode checkout lokal dengan `PAYMENT_MODE=demo`
 
 ## Struktur Project
 
@@ -82,7 +82,7 @@ Aplikasi ini dirancang untuk local development dan kebutuhan presentasi portfoli
 grocery-delivery-apps/
 +-- admin/       # React + Vite admin panel
 +-- backend/     # Express.js + MongoDB API
-+-- docs/        # Portfolio screenshots
++-- docs/        # Screenshot dokumentasi
 +-- frontend/    # React + Vite customer app
 +-- README.md
 ```
@@ -229,32 +229,32 @@ Runtime admin panel:
 http://localhost:5174
 ```
 
-## Akun Demo Admin
+## Akun Admin
 
-Untuk demo lokal:
+Untuk menjalankan admin panel secara lokal:
 
 ```text
 Email: admin@deliveryapps.local
 Password: admin123
 ```
 
-Credential ini hanya contoh untuk demo portfolio lokal. Ini bukan credential production dan harus diganti jika project digunakan untuk deployment nyata.
+Credential ini adalah contoh konfigurasi untuk pengembangan lokal. Ini bukan credential production dan harus diganti jika sistem digunakan pada environment deployment nyata.
 
-## Demo Checkout Mode
+## Mode Checkout Lokal
 
-Project ini menggunakan `PAYMENT_MODE=demo` untuk kebutuhan pengujian lokal dan portfolio.
+Sistem menyediakan mode checkout lokal melalui `PAYMENT_MODE=demo`. Pada mode ini, proses pembayaran disimulasikan berhasil sehingga pengguna dapat melanjutkan alur pemesanan sampai halaman My Orders tanpa harus menggunakan Stripe.
 
-Saat demo mode aktif:
+Saat `PAYMENT_MODE=demo` aktif:
 
-- Checkout mensimulasikan pembayaran berhasil.
-- User diarahkan ke halaman My Orders setelah checkout.
+- Sistem membuat order dan mengarahkan user ke proses verifikasi lokal.
+- User diarahkan ke halaman My Orders setelah proses checkout selesai.
 - Order tetap masuk ke Admin Orders.
 - Admin dapat mengubah status order.
 - Customer dapat melihat status order yang sudah diperbarui di My Orders.
 
-Struktur package Stripe dan payment flow sudah tersedia, tetapi Stripe webhook verification dan payment verification yang production-ready belum diimplementasikan.
+Stripe tetap tersedia sebagai opsi integrasi pembayaran, tetapi Stripe webhook verification dan payment verification untuk production belum diimplementasikan.
 
-Project ini belum production-hardened dan masih ditujukan untuk demo lokal.
+Untuk production, verifikasi pembayaran sebaiknya menggunakan Stripe webhook dan konfigurasi keamanan tambahan. Project ini belum production-hardened.
 
 ## Ringkasan API
 
@@ -287,16 +287,16 @@ Endpoint utama:
 
 Endpoint customer menggunakan customer JWT authentication pada route yang membutuhkan proteksi. Endpoint admin menggunakan admin token authentication pada route yang membutuhkan proteksi.
 
-## Keterbatasan / Known Limitations
+## Keterbatasan Teknis
 
-- Demo checkout digunakan untuk pengujian lokal dan portfolio.
-- Stripe webhook verification belum diimplementasikan.
+- Verifikasi pembayaran Stripe berbasis webhook belum diimplementasikan.
 - Credential admin menggunakan environment variable.
-- Token disimpan di `localStorage` untuk kesederhanaan demo lokal.
-- CORS masih terbuka untuk kebutuhan local development.
+- Token disimpan di `localStorage` untuk kebutuhan pengembangan lokal.
+- Konfigurasi CORS masih menggunakan mode development.
+- Penyimpanan gambar masih menggunakan storage lokal.
 - Project belum disiapkan untuk production deployment.
 
-## Pengembangan Selanjutnya / Future Improvements
+## Pengembangan Selanjutnya
 
 - Stripe webhook integration
 - Role-based admin management
